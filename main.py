@@ -1,11 +1,11 @@
 from fastapi import FastAPI, HTTPException
 import scraper
-from functools import lru_cache
+from cachetools import cached, TTLCache
 from datetime import datetime
 
 app = FastAPI()
 
-@lru_cache(maxsize=128, ttl=900)  # Cache for 15 minutes (900 seconds)
+@cached(cache=TTLCache(maxsize=128, ttl=900))  # Cache for 15 minutes (900 seconds)
 def get_cached_ai_news():
     try:
         return scraper.fetch_ai_news()
