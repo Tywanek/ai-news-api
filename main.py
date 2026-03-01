@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 import scraper
 from cachetools import cached, TTLCache
 from datetime import datetime
+import time
 
 app = FastAPI()
 
@@ -15,4 +16,4 @@ def get_cached_ai_news():
 @app.get("/news", response_model=list[dict])
 async def news():
     news_items = get_cached_ai_news()
-    return [{"title": item["title"], "link": item["link"], "published_date": datetime.fromtimestamp(item["published_date"]).isoformat(), "summary": item["summary"]} for item in news_items]
+    return [{"title": item["title"], "link": item["link"], "published_date": datetime.fromtimestamp(time.mktime(item["published_date"])).isoformat(), "summary": item["summary"]} for item in news_items]
