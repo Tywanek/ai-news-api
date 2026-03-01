@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 import scraper
 from functools import lru_cache
+from datetime import datetime
 
 app = FastAPI()
 
